@@ -1,0 +1,430 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="BDJardinPasitos" Class="PasitosDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=localhost;Initial Catalog=BDJardinPasitos;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="BDJardinPasitosConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.TAlumno" Member="TAlumno">
+    <Type Name="TAlumno">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idResponsable" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="apellido" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="foto" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="tipo_Documento" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="nro_Documento" Type="System.String" DbType="VarChar(8) NOT NULL" CanBeNull="false" />
+      <Column Name="fecha_Nacimiento" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="departamento" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="distrito" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="provincia" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="telefono" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="direccion" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="genero" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="tipoAlumno" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="alegias" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="TAlumno_TMatricula" Member="TMatricula" ThisKey="id" OtherKey="idAlumno" Type="TMatricula" />
+      <Association Name="TipoAlumno_TAlumno" Member="TipoAlumno1" ThisKey="tipoAlumno" OtherKey="id" Type="TipoAlumno" IsForeignKey="true" />
+      <Association Name="TipoDocumento_TAlumno" Member="TipoDocumento" ThisKey="tipo_Documento" OtherKey="id" Type="TipoDocumento" IsForeignKey="true" />
+      <Association Name="TResponsable_TAlumno" Member="TResponsable" ThisKey="idResponsable" OtherKey="id" Type="TResponsable" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TAula" Member="TAula">
+    <Type Name="TAula">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="grado" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="seccion" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="capacidad" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="anio" Type="System.String" DbType="VarChar(4) NOT NULL" CanBeNull="false" />
+      <Column Name="idDocente" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="TAula_TMatricula" Member="TMatricula" ThisKey="id" OtherKey="idAula" Type="TMatricula" />
+      <Association Name="TPersonal_TAula" Member="TPersonal" ThisKey="idDocente" OtherKey="id" Type="TPersonal" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TInstitucionEducativa" Member="TInstitucionEducativa">
+    <Type Name="TInstitucionEducativa">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ruc" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="codigoIE" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Association Name="TInstitucionEducativa_TPersonal" Member="TPersonal" ThisKey="id" OtherKey="institucioneducativa" Type="TPersonal" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TipoAlumno" Member="TipoAlumno">
+    <Type Name="TipoAlumno">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Association Name="TipoAlumno_TAlumno" Member="TAlumno" ThisKey="id" OtherKey="tipoAlumno" Type="TAlumno" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TipoDocumento" Member="TipoDocumento">
+    <Type Name="TipoDocumento">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="TipoDocumento_TAlumno" Member="TAlumno" ThisKey="id" OtherKey="tipo_Documento" Type="TAlumno" />
+      <Association Name="TipoDocumento_TPersonal" Member="TPersonal" ThisKey="id" OtherKey="tipoDocumento" Type="TPersonal" />
+      <Association Name="TipoDocumento_TResponsable" Member="TResponsable" ThisKey="id" OtherKey="tipoDocumento" Type="TResponsable" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TipoPersona" Member="TipoPersona">
+    <Type Name="TipoPersona">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Association Name="TipoPersona_TResponsable" Member="TResponsable" ThisKey="id" OtherKey="tipoPersona" Type="TResponsable" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TipoPersonal" Member="TipoPersonal">
+    <Type Name="TipoPersonal">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Association Name="TipoPersonal_TPersonal" Member="TPersonal" ThisKey="id" OtherKey="tipoPersonal" Type="TPersonal" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TMatricula" Member="TMatricula">
+    <Type Name="TMatricula">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idAlumno" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idUsuRes" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idAula" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="codModular" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="idpago" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="TAlumno_TMatricula" Member="TAlumno" ThisKey="idAlumno" OtherKey="id" Type="TAlumno" IsForeignKey="true" />
+      <Association Name="TAula_TMatricula" Member="TAula" ThisKey="idAula" OtherKey="id" Type="TAula" IsForeignKey="true" />
+      <Association Name="TPago_TMatricula" Member="TPago" ThisKey="idpago" OtherKey="id" Type="TPago" IsForeignKey="true" />
+      <Association Name="TUsuario_TMatricula" Member="TUsuario" ThisKey="idUsuRes" OtherKey="id" Type="TUsuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TMensualidad" Member="TMensualidad">
+    <Type Name="TMensualidad">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nombreMes" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="monto" Type="System.Decimal" DbType="Decimal(9,2) NOT NULL" CanBeNull="false" />
+      <Column Name="estado" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="idPago" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="TPago_TMensualidad" Member="TPago" ThisKey="idPago" OtherKey="id" Type="TPago" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TPago" Member="TPago">
+    <Type Name="TPago">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nroBoleta" Type="System.String" DbType="VarChar(7) NOT NULL" CanBeNull="false" />
+      <Column Name="rucIE" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="fecha" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="concepto" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="monto" Type="System.Decimal" DbType="Decimal(9,2) NOT NULL" CanBeNull="false" />
+      <Association Name="TPago_TMatricula" Member="TMatricula" ThisKey="id" OtherKey="idpago" Type="TMatricula" />
+      <Association Name="TPago_TMensualidad" Member="TMensualidad" ThisKey="id" OtherKey="idPago" Type="TMensualidad" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TPersonal" Member="TPersonal">
+    <Type Name="TPersonal">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="apellido" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="foto" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="fechaNacimiento" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="tipoDocumento" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="nroDocumento" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="institucioneducativa" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="direccion" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="celular" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="tipoPersonal" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="TPersonal_TAula" Member="TAula" ThisKey="id" OtherKey="idDocente" Type="TAula" />
+      <Association Name="TPersonal_TUsuario" Member="TUsuario" ThisKey="id" OtherKey="personal" Type="TUsuario" />
+      <Association Name="TInstitucionEducativa_TPersonal" Member="TInstitucionEducativa" ThisKey="institucioneducativa" OtherKey="id" Type="TInstitucionEducativa" IsForeignKey="true" />
+      <Association Name="TipoDocumento_TPersonal" Member="TipoDocumento1" ThisKey="tipoDocumento" OtherKey="id" Type="TipoDocumento" IsForeignKey="true" />
+      <Association Name="TipoPersonal_TPersonal" Member="TipoPersonal1" ThisKey="tipoPersonal" OtherKey="id" Type="TipoPersonal" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TPrivilegio" Member="TPrivilegio">
+    <Type Name="TPrivilegio">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Association Name="TPrivilegio_TUsuario" Member="TUsuario" ThisKey="id" OtherKey="privilegio" Type="TUsuario" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TResponsable" Member="TResponsable">
+    <Type Name="TResponsable">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="apellido" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="tipoDocumento" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="nroDocumento" Type="System.String" DbType="VarChar(8) NOT NULL" CanBeNull="false" />
+      <Column Name="fecha_Nacimiento" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="direccion" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="celular" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="ocupacion" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="tipoPersona" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="TResponsable_TAlumno" Member="TAlumno" ThisKey="id" OtherKey="idResponsable" Type="TAlumno" />
+      <Association Name="TipoDocumento_TResponsable" Member="TipoDocumento1" ThisKey="tipoDocumento" OtherKey="id" Type="TipoDocumento" IsForeignKey="true" />
+      <Association Name="TipoPersona_TResponsable" Member="TipoPersona1" ThisKey="tipoPersona" OtherKey="id" Type="TipoPersona" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TUsuario" Member="TUsuario">
+    <Type Name="TUsuario">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="usuario" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="contrasenia" Type="System.Data.Linq.Binary" DbType="VarBinary(500) NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="personal" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="privilegio" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="TUsuario_TMatricula" Member="TMatricula" ThisKey="id" OtherKey="idUsuRes" Type="TMatricula" />
+      <Association Name="TPersonal_TUsuario" Member="TPersonal" ThisKey="personal" OtherKey="id" Type="TPersonal" IsForeignKey="true" />
+      <Association Name="TPrivilegio_TUsuario" Member="TPrivilegio" ThisKey="privilegio" OtherKey="id" Type="TPrivilegio" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.spActualizarPersonal" Method="spActualizarPersonal">
+    <Parameter Name="nombre" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="apellido" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="foto" Type="System.Data.Linq.Binary" DbType="Image" />
+    <Parameter Name="fechaNacimiento" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="tipoDocumento" Type="System.Int32" DbType="Int" />
+    <Parameter Name="nroDocumento" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="institucion" Type="System.Int32" DbType="Int" />
+    <Parameter Name="direccion" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="celular" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="email" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="tipoPersonal" Type="System.Int32" DbType="Int" />
+    <ElementType Name="spActualizarPersonalResult">
+      <Column Name="CodError" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Mensaje" Type="System.String" DbType="VarChar(26) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spAgregarPersonal" Method="spAgregarPersonal">
+    <Parameter Name="nombre" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="apellido" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="foto" Type="System.Data.Linq.Binary" DbType="Image" />
+    <Parameter Name="fechaNacimiento" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="tipoDocumento" Type="System.Int32" DbType="Int" />
+    <Parameter Name="nroDocumento" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="institucion" Type="System.Int32" DbType="Int" />
+    <Parameter Name="direccion" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="celular" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="email" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="tipoPersonal" Type="System.Int32" DbType="Int" />
+    <ElementType Name="spAgregarPersonalResult">
+      <Column Name="CodError" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Mensaje" Type="System.String" DbType="VarChar(24) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spBuscarPersonal" Method="spBuscarPersonal">
+    <Parameter Name="texto" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="criterio" Type="System.String" DbType="VarChar(50)" />
+    <ElementType Name="spBuscarPersonalResult">
+      <Column Name="nombre" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="apellido" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="foto" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" />
+      <Column Name="fechaNacimiento" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="tipoDocumento" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="nroDocumento" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="institucioneducativa" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="direccion" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="celular" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="TipoPersonal" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spListarPersonal" Method="spListarPersonal">
+    <ElementType Name="spListarPersonalResult">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="apellido" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="foto" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" />
+      <Column Name="fechaNacimiento" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="tipoDocumento" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="nroDocumento" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="institucioneducativa" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="direccion" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="celular" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="TipoPersonal" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spCambiarContrasenia" Method="spCambiarContrasenia">
+    <Parameter Name="usuario" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="passAnterior" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="passNueva" Type="System.String" DbType="VarChar(50)" />
+    <ElementType Name="spCambiarContraseniaResult">
+      <Column Name="CodError" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Mensaje" Type="System.String" DbType="VarChar(14) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spCrearAula" Method="spCrearAula">
+    <Parameter Name="grado" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="seccion" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="capacidad" Type="System.Int32" DbType="Int" />
+    <Parameter Name="anio" Type="System.String" DbType="VarChar(4)" />
+    <Parameter Name="docente" Type="System.Int32" DbType="Int" />
+    <ElementType Name="spCrearAulaResult">
+      <Column Name="CodError" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Mensaje" Type="System.String" DbType="VarChar(26) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spCrearUsuario" Method="spCrearUsuario">
+    <Parameter Name="usuario" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="pass" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="personal" Type="System.Int32" DbType="Int" />
+    <Parameter Name="privilegio" Type="System.Int32" DbType="Int" />
+    <ElementType Name="spCrearUsuarioResult">
+      <Column Name="CodError" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Mensaje" Type="System.String" DbType="VarChar(32) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spListarAlumnosPorAula" Method="spListarAlumnosPorAula">
+    <Parameter Name="Aula" Parameter="aula" Type="System.Int32" DbType="Int" />
+    <ElementType Name="spListarAlumnosPorAulaResult">
+      <Column Name="apellido" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spListarPrivilegios" Method="spListarPrivilegios">
+    <ElementType Name="spListarPrivilegiosResult">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spListarPersonalSinUsuario" Method="spListarPersonalSinUsuario">
+    <ElementType Name="spListarPersonalSinUsuarioResult">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spLoginUsuario" Method="spLoginUsuario">
+    <Parameter Name="usuario" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="pass" Type="System.String" DbType="VarChar(50)" />
+    <ElementType Name="spLoginUsuarioResult">
+      <Column Name="usuario" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="contrasenia" Type="System.Data.Linq.Binary" DbType="VarBinary(500) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spActualizarAlumno" Method="spActualizarAlumno">
+    <Parameter Name="idResponsable" Type="System.Int32" DbType="Int" />
+    <Parameter Name="nombre" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="apellido" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="foto" Type="System.Data.Linq.Binary" DbType="Image" />
+    <Parameter Name="tipoDocumento" Type="System.Int32" DbType="Int" />
+    <Parameter Name="nroDocumento" Type="System.String" DbType="VarChar(8)" />
+    <Parameter Name="fechaNacimiento" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="departamento" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="distrito" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="provincia" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="telefono" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="direccion" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="genero" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="tipoAlumno" Type="System.Int32" DbType="Int" />
+    <Parameter Name="alergias" Type="System.String" DbType="VarChar(50)" />
+    <ElementType Name="spActualizarAlumnoResult">
+      <Column Name="codError" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Mensaje" Type="System.String" DbType="VarChar(36) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spActualizarResponsable" Method="spActualizarResponsable">
+    <Parameter Name="nombre" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="apellido" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="tipoDocumento" Type="System.Int32" DbType="Int" />
+    <Parameter Name="nroDocumento" Type="System.String" DbType="VarChar(8)" />
+    <Parameter Name="fechaNacimiento" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="direccion" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="celular" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="ocupacion" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="tipoPersona" Type="System.Int32" DbType="Int" />
+    <ElementType Name="spActualizarResponsableResult">
+      <Column Name="codError" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Mensaje" Type="System.String" DbType="VarChar(41) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spAgregarAlumno" Method="spAgregarAlumno">
+    <Parameter Name="idResponsable" Type="System.Int32" DbType="Int" />
+    <Parameter Name="nombre" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="apellido" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="foto" Type="System.Data.Linq.Binary" DbType="Image" />
+    <Parameter Name="tipoDocumento" Type="System.Int32" DbType="Int" />
+    <Parameter Name="nroDocumento" Type="System.String" DbType="VarChar(8)" />
+    <Parameter Name="fechaNacimiento" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="departamento" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="distrito" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="provincia" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="telefono" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="direccion" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="genero" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="tipoAlumno" Type="System.Int32" DbType="Int" />
+    <Parameter Name="alergias" Type="System.String" DbType="VarChar(50)" />
+    <ElementType Name="spAgregarAlumnoResult">
+      <Column Name="CodError" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Mensaje" Type="System.String" DbType="VarChar(24) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spAgregarPago" Method="spAgregarPago">
+    <Parameter Name="nroBoleta" Type="System.String" DbType="VarChar(7)" />
+    <Parameter Name="rucIE" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="fecha" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="concepto" Type="System.String" DbType="VarChar(15)" />
+    <Parameter Name="monto" Type="System.Decimal" DbType="Decimal(9,2)" />
+    <ElementType Name="spAgregarPagoResult">
+      <Column Name="CodError" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Mensaje" Type="System.String" DbType="VarChar(24) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spAgregarResponsable" Method="spAgregarResponsable">
+    <Parameter Name="nombre" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="apellido" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="tipoDocumento" Type="System.Int32" DbType="Int" />
+    <Parameter Name="nroDocumento" Type="System.String" DbType="VarChar(8)" />
+    <Parameter Name="fechaNacimiento" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="direccion" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="celular" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="ocupacion" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="tipoPersona" Type="System.Int32" DbType="Int" />
+    <ElementType Name="spAgregarResponsableResult">
+      <Column Name="CodError" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Mensaje" Type="System.String" DbType="VarChar(24) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spListarInstitucion" Method="spListarInstitucion">
+    <ElementType Name="spListarInstitucionResult">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ruc" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="codigoIE" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spListarTipoAlumno" Method="spListarTipoAlumno">
+    <ElementType Name="spListarTipoAlumnoResult">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spListarTipoDocumento" Method="spListarTipoDocumento">
+    <ElementType Name="spListarTipoDocumentoResult">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spListarTipoPersona" Method="spListarTipoPersona">
+    <ElementType Name="spListarTipoPersonaResult">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spListarResponsableAlumno" Method="spListarResponsableAlumno">
+    <ElementType Name="spListarResponsableAlumnoResult">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="apoderado" Type="System.String" DbType="VarChar(112) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spListarAula" Method="spListarAula">
+    <ElementType Name="spListarAulaResult">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Grado" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Seccion" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Capacidad" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Año" Type="System.String" DbType="VarChar(4) NOT NULL" CanBeNull="false" />
+      <Column Name="Docente" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spBuscarAula" Method="spBuscarAula">
+    <Parameter Name="id" Type="System.Int32" DbType="Int" />
+    <ElementType Name="spBuscarAulaResult">
+      <Column Name="grado" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="seccion" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="capacidad" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="anio" Type="System.String" DbType="VarChar(4) NOT NULL" CanBeNull="false" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+</Database>
